@@ -1,0 +1,15 @@
+package com.employee.demo.repo;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.employee.demo.entity.EmployeeEntity;
+
+public interface Employeerepo extends JpaRepository<EmployeeEntity, Integer> {
+	
+  @Query(value ="select * from employee_details where salary > ? and salary < ?", nativeQuery = true)
+	List<EmployeeEntity> displayInfo(int salary1, int salary2);
+
+}

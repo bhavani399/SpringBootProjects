@@ -1,0 +1,23 @@
+package com.example.demo.sample;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController  // request and response
+public class SampleExample {
+	
+	@GetMapping(value = "/display") // get the data
+	public String show() {
+		return "Hello World";
+	}
+	
+	@GetMapping()
+	public int add() {
+		int a = 10;
+		int b= 20;
+		int c = a+b;
+		return c;
+	}
+
+}
+ 	 	

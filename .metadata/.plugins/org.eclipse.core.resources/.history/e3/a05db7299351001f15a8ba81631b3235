@@ -1,0 +1,73 @@
+package com.employee.demo.dao;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.aspectj.bridge.MessageUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
+
+import com.employee.demo.entity.EmployeeEntity;
+import com.employee.demo.repo.Employeerepo;
+
+@Repository
+public class EmployeeDao {
+	Logger logger = LoggerFactory.getLogger(EmployeeDao.class);
+	@Autowired
+	Employeerepo employeerepo;
+	
+	public EmployeeEntity addInfo(EmployeeEntity employeeEntity) {
+		return employeerepo.save(employeeEntity);
+		
+	}
+
+	public EmployeeEntity updatedata(EmployeeEntity employeeEntity) {
+		logger.info("cmg to the DAO");
+		return employeerepo.save(employeeEntity);
+		//return "Data updated to the DB";
+	}
+
+	public String addbulkInfo(List<EmployeeEntity> employeeEntity) {
+		employeerepo.saveAll(employeeEntity);
+		return "Bulk data added to the DB";
+	}
+
+	public List<EmployeeEntity> getAll() {
+		return employeerepo.findAll() ;
+	}
+
+	public ResponseEntity<EmployeeEntity> getinfo(int id) {
+		Optional<EmployeeEntity> getIdInfo = employeerepo.findById(id);
+		if(getIdInfo.isPresent()) {
+			return ResponseEntity.status(HttpStatus.OK).body(getIdInfo.get());
+		}
+
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(getIdInfo.get());
+					
+		}
+
+	public EmployeeEntity getId(int id) {
+		
+		return employeerepo.findById(id).get();
+	}
+
+	public String deleteId(int id) {
+		employeerepo.deleteById(id);
+		return "data deleted from the DB";
+	}
+
+	public String deleteInfo() {
+		employeerepo.deleteAll();
+		return "data deleted from the DB";
+	}
+
+	public List<EmployeeEntity> displayInfo(int salary1, int salary2) {
+	
+		return employeerepo.displayInfo(salary1,salary2);
+	}
+
+}
